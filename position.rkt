@@ -37,10 +37,10 @@
 
 (define (Pos->racket-pos t pos)
   (match-define (Pos #:line line #:char char) pos)
-  (line/char->pos t line char))
+  (line/char->racket-pos t line char))
 
 (define (line/char->racket-pos t line char)
   (+ char (send t paragraph-start-position line)))
 
 (define (start/end->Range t start end)
-  (Range #:start (abs-pos->Pos t start) #:end (abs-pos->Pos t end)))
+  (Range #:start (racket-pos->Pos t start) #:end (racket-pos->Pos t end)))
