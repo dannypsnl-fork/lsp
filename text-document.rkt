@@ -65,7 +65,7 @@
 ;;;;;;;;;;;;;
 
 ;; Definition request
-(define (definition get-decl id params)
+(define (definition get-decl params)
   (match params
     [(hash-table ['textDocument (DocIdentifier #:uri uri)]
                  ['position (Pos #:line line #:char char)])
@@ -77,6 +77,6 @@
          [range
           (Location #:uri uri
                     #:range range)]))
-     (success-response id result)]
+     result]
     [_
-     (error-response id INVALID-PARAMS "textDocument/definition failed")]))
+     (error-response INVALID-PARAMS "textDocument/definition failed")]))

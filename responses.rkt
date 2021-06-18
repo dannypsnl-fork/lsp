@@ -6,22 +6,14 @@
 
 (define not-given (gensym 'not-given))
 
-;; Constructor for a response object representing success.
-(define (success-response id result)
-  (hasheq 'jsonrpc "2.0"
-          'id id
-          'result result))
-
 ;; Constructor for a response object representing failure.
-(define (error-response id code message [data not-given])
+(define (error-response code message [data not-given])
   (define err (hasheq 'code code
                       'message message))
   (define err* (if (eq? data not-given)
                    err
                    (hash-set err 'data data)))
-  (hasheq 'jsonrpc "2.0"
-          'id id
-          'error err*))
+  err*)
 
 (define Diag-Error 1)
 (define Diag-Warning 2)
@@ -34,3 +26,10 @@
           'method "textDocument/publishDiagnostics"
           'params (hasheq 'uri uri
                           'diagnostics diags)))
+
+(define DocumentHighlightKind.Text 1)
+(define DocumentHighlightKind.Read 2)
+(define DocumentHighlightKind.Write 3)
+(define (DocumentHighlight range [kind #f])
+  (hasheq 'range range
+          'kind kind))
