@@ -1,24 +1,11 @@
 #lang racket
 
-(module+ main
-  (require racket/cmdline)
+(provide (all-from-out "responses.rkt")
+         (all-from-out "position.rkt")
+         (all-from-out "text-document.rkt")
+         (all-from-out "error-codes.rkt"))
 
-  (define who (make-parameter "world"))
-  (command-line
-    #:program "lsp"
-    #:once-each
-    [("-n" "--name") name "Who to say hello to" (who name)]
-    #:args ()
-    (printf "hello ~a~n" (who))))
-
-(module+ test
-  (require rackunit)
-
-  (define expected 1)
-  (define actual 1)
-
-  (test-case
-    "Example Test"
-    (check-equal? actual expected))
-
-  (test-equal? "Shortcut Equal Test" actual expected))
+(require "responses.rkt"
+         "position.rkt"
+         "text-document.rkt"
+         "error-codes.rkt")
