@@ -13,7 +13,7 @@
 
 (define already-initialized? #f)
 
-(define (initialize params)
+(define (initialize id params)
   (match params
     [(hash-table ['processId (? (or/c number? (json-null)) process-id)]
                  ['capabilities (? jsexpr? capabilities)])
@@ -44,6 +44,6 @@
                'documentOnTypeFormattingProvider (hasheq 'firstTriggerCharacter ")" 'moreTriggerCharacter (list "\n" "]"))))
 
      (set! already-initialized? #t)
-     (hasheq 'capabilities server-capabilities)]
+     (success-response id (hasheq 'capabilities server-capabilities))]
     [_
-     (error-response INVALID-PARAMS "initialize failed")]))
+     (error-response id INVALID-PARAMS "initialize failed")]))
